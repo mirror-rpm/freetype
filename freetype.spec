@@ -7,7 +7,7 @@
 Summary: A free and portable font rendering engine
 Name: freetype
 Version: 2.4.4
-Release: 3%{?dist}
+Release: 4%{?dist}
 License: FTL or GPLv2+
 Group: System Environment/Libraries
 URL: http://www.freetype.org
@@ -28,6 +28,7 @@ Patch88:  freetype-multilib.patch
 Patch89:  freetype-2.4.2-CVE-2010-3311.patch
 
 Patch90:  0001-Fall-back-to-autohinting-if-a-TTF-OTF-doesn-t-contai.patch
+Patch91:  0002-Fix-autohinting-fallback.patch
 
 Buildroot: %{_tmppath}/%{name}-%{version}-root-%(%{__id_u} -n)
 
@@ -90,6 +91,7 @@ popd
 %patch88 -p1 -b .multilib
 %patch89 -p1 -b .CVE-2010-3311
 %patch90 -p1 -b .auto-autohint
+%patch91 -p1 -b .fix-autohint
 
 %build
 
@@ -222,6 +224,10 @@ rm -rf $RPM_BUILD_ROOT
 %doc docs/tutorial
 
 %changelog
+* Tue Mar  8 2011 Marek Kasik <mkasik@redhat.com> 2.4.4-4
+- Fix autohinting fallback (#547532).
+- Ignore CFF-based OTFs.
+
 * Sun Feb 20 2011 Marek Kasik <mkasik@redhat.com> 2.4.4-3
 - Enable bytecode interpreter (#547532).
 - Fall back to autohinting if a TTF/OTF doesn't contain any bytecode.
