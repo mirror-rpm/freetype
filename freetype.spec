@@ -6,8 +6,8 @@
 
 Summary: A free and portable font rendering engine
 Name: freetype
-Version: 2.4.4
-Release: 4%{?dist}
+Version: 2.4.5
+Release: 1%{?dist}
 License: FTL or GPLv2+
 Group: System Environment/Libraries
 URL: http://www.freetype.org
@@ -26,9 +26,6 @@ Patch47:  freetype-2.3.11-more-demos.patch
 Patch88:  freetype-multilib.patch
 
 Patch89:  freetype-2.4.2-CVE-2010-3311.patch
-
-Patch90:  0001-Fall-back-to-autohinting-if-a-TTF-OTF-doesn-t-contai.patch
-Patch91:  0002-Fix-autohinting-fallback.patch
 
 Buildroot: %{_tmppath}/%{name}-%{version}-root-%(%{__id_u} -n)
 
@@ -90,8 +87,6 @@ popd
 
 %patch88 -p1 -b .multilib
 %patch89 -p1 -b .CVE-2010-3311
-%patch90 -p1 -b .auto-autohint
-%patch91 -p1 -b .fix-autohint
 
 %build
 
@@ -184,7 +179,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root)
 %{_libdir}/libfreetype.so.*
 %doc README
-%doc docs/LICENSE.TXT docs/FTL.TXT docs/GPL.TXT
+%doc docs/LICENSE.TXT docs/FTL.TXT docs/GPLv2.TXT
 %doc docs/CHANGES docs/VERSION.DLL docs/formats.txt docs/ft2faq.html
 
 %files demos
@@ -224,6 +219,9 @@ rm -rf $RPM_BUILD_ROOT
 %doc docs/tutorial
 
 %changelog
+* Tue Jun 28 2011 Marek Kasik <mkasik@redhat.com> 2.4.5-1
+- Update to 2.4.5
+
 * Tue Mar  8 2011 Marek Kasik <mkasik@redhat.com> 2.4.4-4
 - Fix autohinting fallback (#547532).
 - Ignore CFF-based OTFs.
