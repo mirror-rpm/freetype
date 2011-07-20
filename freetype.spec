@@ -7,7 +7,7 @@
 Summary: A free and portable font rendering engine
 Name: freetype
 Version: 2.4.5
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: FTL or GPLv2+
 Group: System Environment/Libraries
 URL: http://www.freetype.org
@@ -26,6 +26,7 @@ Patch47:  freetype-2.3.11-more-demos.patch
 Patch88:  freetype-multilib.patch
 
 Patch89:  freetype-2.4.2-CVE-2010-3311.patch
+Patch90:  freetype-2.4.5-CVE-2011-0226.patch
 
 Buildroot: %{_tmppath}/%{name}-%{version}-root-%(%{__id_u} -n)
 
@@ -87,6 +88,7 @@ popd
 
 %patch88 -p1 -b .multilib
 %patch89 -p1 -b .CVE-2010-3311
+%patch90 -p1 -b .CVE-2011-0226
 
 %build
 
@@ -219,6 +221,13 @@ rm -rf $RPM_BUILD_ROOT
 %doc docs/tutorial
 
 %changelog
+* Wed Jul 20 2011 Marek Kasik <mkasik@redhat.com> 2.4.5-2
+- Add freetype-2.4.5-CVE-2011-0226.patch
+    (Add better argument check for `callothersubr'.)
+    - based on patches by Werner Lemberg,
+      Alexei Podtelezhnikov and Matthias Drochner
+- Resolves: #723469
+
 * Tue Jun 28 2011 Marek Kasik <mkasik@redhat.com> 2.4.5-1
 - Update to 2.4.5
 
