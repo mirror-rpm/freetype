@@ -7,7 +7,7 @@
 Summary: A free and portable font rendering engine
 Name: freetype
 Version: 2.4.7
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: FTL or GPLv2+
 Group: System Environment/Libraries
 URL: http://www.freetype.org
@@ -219,6 +219,9 @@ rm -rf $RPM_BUILD_ROOT
 %doc docs/tutorial
 
 %changelog
+* Wed Oct 26 2011 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2.4.7-2
+- Rebuilt for glibc bug#747377
+
 * Thu Oct 20 2011 Marek Kasik <mkasik@redhat.com> 2.4.7-1
 - Update to 2.4.7
 - Fixes CVE-2011-3256
