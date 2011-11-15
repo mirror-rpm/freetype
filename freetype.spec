@@ -6,8 +6,8 @@
 
 Summary: A free and portable font rendering engine
 Name: freetype
-Version: 2.4.7
-Release: 2%{?dist}
+Version: 2.4.8
+Release: 1%{?dist}
 License: FTL or GPLv2+
 Group: System Environment/Libraries
 URL: http://www.freetype.org
@@ -24,8 +24,6 @@ Patch47:  freetype-2.3.11-more-demos.patch
 
 # Fix multilib conflicts
 Patch88:  freetype-multilib.patch
-
-Patch89:  freetype-2.4.2-CVE-2010-3311.patch
 
 Buildroot: %{_tmppath}/%{name}-%{version}-root-%(%{__id_u} -n)
 
@@ -86,7 +84,6 @@ pushd ft2demos-%{version}
 popd
 
 %patch88 -p1 -b .multilib
-%patch89 -p1 -b .CVE-2010-3311
 
 %build
 
@@ -219,6 +216,10 @@ rm -rf $RPM_BUILD_ROOT
 %doc docs/tutorial
 
 %changelog
+* Tue Nov 15 2011 Marek Kasik <mkasik@redhat.com> 2.4.8-1
+- Update to 2.4.8
+- Remove an unneeded patch
+
 * Wed Oct 26 2011 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2.4.7-2
 - Rebuilt for glibc bug#747377
 
