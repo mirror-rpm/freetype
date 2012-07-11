@@ -6,7 +6,7 @@
 
 Summary: A free and portable font rendering engine
 Name: freetype
-Version: 2.4.9
+Version: 2.4.10
 Release: 1%{?dist}
 License: FTL or GPLv2+
 Group: System Environment/Libraries
@@ -24,15 +24,6 @@ Patch47:  freetype-2.3.11-more-demos.patch
 
 # Fix multilib conflicts
 Patch88:  freetype-multilib.patch
-
-Patch89:  freetype-2.4.9-CVE-2012-1139.patch
-Patch90:  freetype-2.4.9-CVE-2012-1141.patch
-
-# https://savannah.nongnu.org/bugs/?35833
-Patch91:  freetype-2.4.9-loop-exit-condition.patch
-
-#https://savannah.nongnu.org/bugs/?35847
-Patch92:  freetype-2.4.9-incremental-interface.patch
 
 Buildroot: %{_tmppath}/%{name}-%{version}-root-%(%{__id_u} -n)
 
@@ -93,10 +84,6 @@ pushd ft2demos-%{version}
 popd
 
 %patch88 -p1 -b .multilib
-%patch89 -p1 -b .CVE-2012-1139
-%patch90 -p1 -b .CVE-2012-1141
-%patch91 -p1 -b .loop-exit-condition
-%patch92 -p1 -b .incremental-interface
 
 %build
 
@@ -229,6 +216,11 @@ rm -rf $RPM_BUILD_ROOT
 %doc docs/tutorial
 
 %changelog
+* Wed Jul 11 2012 Marek Kasik <mkasik@redhat.com> 2.4.10-1
+- Update to 2.4.10
+- Remove patches which are already included in upstream
+- Resolves: #832651
+
 * Fri Mar 30 2012 Marek Kasik <mkasik@redhat.com> 2.4.9-1
 - Update to 2.4.9
 - Fixes various CVEs
