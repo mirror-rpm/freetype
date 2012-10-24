@@ -7,8 +7,8 @@
 Summary: A free and portable font rendering engine
 Name: freetype
 Version: 2.4.10
-Release: 2%{?dist}
-License: FTL or GPLv2+
+Release: 3%{?dist}
+License: (FTL or GPLv2+) and BSD and MIT and Public Domain and zlib with acknowledgement
 Group: System Environment/Libraries
 URL: http://www.freetype.org
 Source:  http://download.savannah.gnu.org/releases/freetype/freetype-%{version}.tar.bz2
@@ -216,6 +216,9 @@ rm -rf $RPM_BUILD_ROOT
 %doc docs/tutorial
 
 %changelog
+* Wed Oct 24 2012 Marek Kasik <mkasik@redhat.com> - 2.4.10-3
+- Update License field
+
 * Fri Jul 27 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2.4.10-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_18_Mass_Rebuild
 
