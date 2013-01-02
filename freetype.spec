@@ -6,8 +6,8 @@
 
 Summary: A free and portable font rendering engine
 Name: freetype
-Version: 2.4.10
-Release: 3%{?dist}
+Version: 2.4.11
+Release: 1%{?dist}
 License: (FTL or GPLv2+) and BSD and MIT and Public Domain and zlib with acknowledgement
 Group: System Environment/Libraries
 URL: http://www.freetype.org
@@ -216,6 +216,10 @@ rm -rf $RPM_BUILD_ROOT
 %doc docs/tutorial
 
 %changelog
+* Wed Jan  2 2013 Marek Kasik <mkasik@redhat.com> - 2.4.11-1
+- Update to 2.4.11
+- Resolves: #889177
+
 * Wed Oct 24 2012 Marek Kasik <mkasik@redhat.com> - 2.4.10-3
 - Update License field
 
