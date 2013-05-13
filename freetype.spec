@@ -7,7 +7,7 @@
 Summary: A free and portable font rendering engine
 Name: freetype
 Version: 2.4.12
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: (FTL or GPLv2+) and BSD and MIT and Public Domain and zlib with acknowledgement
 Group: System Environment/Libraries
 URL: http://www.freetype.org
@@ -27,6 +27,9 @@ Patch88:  freetype-multilib.patch
 
 # https://bugzilla.redhat.com/show_bug.cgi?id=959771
 Patch89:  freetype-2.4.12-enable-adobe-cff-engine.patch
+
+# https://bugzilla.redhat.com/show_bug.cgi?id=961855
+Patch90:  freetype-2.4.12-pkgconfig.patch
 
 Buildroot: %{_tmppath}/%{name}-%{version}-root-%(%{__id_u} -n)
 
@@ -89,6 +92,8 @@ popd
 %patch88 -p1 -b .multilib
 
 %patch89 -p1 -b .adobe-cff
+
+%patch90 -p1 -b .pkgconfig
 
 %build
 
@@ -221,6 +226,10 @@ rm -rf $RPM_BUILD_ROOT
 %doc docs/tutorial
 
 %changelog
+* Mon May 13 2013 Marek Kasik <mkasik@redhat.com> - 2.4.12-2
+- Don't use quotes in freetype2.pc
+- Resolves: #961855
+
 * Thu May  9 2013 Marek Kasik <mkasik@redhat.com> - 2.4.12-1
 - Update to 2.4.12
 - Enable Adobe CFF engine
