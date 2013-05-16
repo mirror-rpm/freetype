@@ -7,7 +7,7 @@
 Summary: A free and portable font rendering engine
 Name: freetype
 Version: 2.4.12
-Release: 3%{?dist}
+Release: 4%{?dist}
 License: (FTL or GPLv2+) and BSD and MIT and Public Domain and zlib with acknowledgement
 Group: System Environment/Libraries
 URL: http://www.freetype.org
@@ -110,11 +110,15 @@ make TOP_DIR=".."
 popd
 %endif
 
-# Convert FTL.txt to UTF-8
+# Convert FTL.txt and example3.cpp to UTF-8
 pushd docs
 iconv -f latin1 -t utf-8 < FTL.TXT > FTL.TXT.tmp && \
 touch -r FTL.TXT FTL.TXT.tmp && \
 mv FTL.TXT.tmp FTL.TXT
+
+iconv -f iso-8859-1 -t utf-8 < "tutorial/example3.cpp" > "tutorial/example3.cpp.utf8"
+touch -r tutorial/example3.cpp tutorial/example3.cpp.utf8 && \
+mv tutorial/example3.cpp.utf8 tutorial/example3.cpp
 popd
 
 
@@ -212,6 +216,9 @@ rm -rf $RPM_BUILD_ROOT
 %doc docs/tutorial
 
 %changelog
+* Thu May 16 2013 Marek Kasik <mkasik@redhat.com> - 2.4.12-4
+- Change encoding of "docs/tutorial/example3.cpp" to UTF-8
+
 * Thu May 16 2013 Marek Kasik <mkasik@redhat.com> - 2.4.12-3
 - Package ftconfig.h as source file
 
