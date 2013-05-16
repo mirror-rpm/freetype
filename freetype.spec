@@ -7,13 +7,14 @@
 Summary: A free and portable font rendering engine
 Name: freetype
 Version: 2.4.12
-Release: 2%{?dist}
+Release: 3%{?dist}
 License: (FTL or GPLv2+) and BSD and MIT and Public Domain and zlib with acknowledgement
 Group: System Environment/Libraries
 URL: http://www.freetype.org
 Source:  http://download.savannah.gnu.org/releases/freetype/freetype-%{version}.tar.bz2
 Source1: http://download.savannah.gnu.org/releases/freetype/freetype-doc-%{version}.tar.bz2
 Source2: http://download.savannah.gnu.org/releases/freetype/ft2demos-%{version}.tar.bz2
+Source3: ftconfig.h
 
 Patch21:  freetype-2.3.0-enable-spr.patch
 
@@ -145,22 +146,7 @@ rm -rf $RPM_BUILD_ROOT
 
 mv $RPM_BUILD_ROOT%{_includedir}/freetype2/freetype/config/ftconfig.h \
    $RPM_BUILD_ROOT%{_includedir}/freetype2/freetype/config/ftconfig-%{wordsize}.h
-cat >$RPM_BUILD_ROOT%{_includedir}/freetype2/freetype/config/ftconfig.h <<EOF
-#ifndef __FTCONFIG_H__MULTILIB
-#define __FTCONFIG_H__MULTILIB
-
-#include <bits/wordsize.h>
-
-#if __WORDSIZE == 32
-# include "ftconfig-32.h"
-#elif __WORDSIZE == 64
-# include "ftconfig-64.h"
-#else
-# error "unexpected value for __WORDSIZE macro"
-#endif
-
-#endif 
-EOF
+install -p -m 644 %{SOURCE3} $RPM_BUILD_ROOT%{_includedir}/freetype2/freetype/config/ftconfig.h
 
 # Don't package static a or .la files
 rm -f $RPM_BUILD_ROOT%{_libdir}/*.{a,la}
@@ -226,6 +212,9 @@ rm -rf $RPM_BUILD_ROOT
 %doc docs/tutorial
 
 %changelog
+* Thu May 16 2013 Marek Kasik <mkasik@redhat.com> - 2.4.12-3
+- Package ftconfig.h as source file
+
 * Mon May 13 2013 Marek Kasik <mkasik@redhat.com> - 2.4.12-2
 - Don't use quotes in freetype2.pc
 - Resolves: #961855
