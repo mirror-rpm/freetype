@@ -7,7 +7,7 @@
 Summary: A free and portable font rendering engine
 Name: freetype
 Version: 2.4.12
-Release: 4%{?dist}
+Release: 5%{?dist}
 License: (FTL or GPLv2+) and BSD and MIT and Public Domain and zlib with acknowledgement
 Group: System Environment/Libraries
 URL: http://www.freetype.org
@@ -142,7 +142,7 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 # fix multilib issues
-%ifarch x86_64 s390x ia64 ppc64 alpha sparc64
+%ifarch x86_64 s390x ia64 ppc64 alpha sparc64 aarch64
 %define wordsize 64
 %else
 %define wordsize 32
@@ -216,6 +216,9 @@ rm -rf $RPM_BUILD_ROOT
 %doc docs/tutorial
 
 %changelog
+* Wed May 29 2013 Peter Robinson <pbrobinson@fedoraproject.org> 2.4.12-5
+- Add aarch64 to 64 bit arch list
+
 * Thu May 16 2013 Marek Kasik <mkasik@redhat.com> - 2.4.12-4
 - Change encoding of "docs/tutorial/example3.cpp" to UTF-8
 
