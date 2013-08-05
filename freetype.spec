@@ -7,7 +7,7 @@
 Summary: A free and portable font rendering engine
 Name: freetype
 Version: 2.5.0
-Release: 2%{?dist}
+Release: 3%{?dist}
 License: (FTL or GPLv2+) and BSD and MIT and Public Domain and zlib with acknowledgement
 Group: System Environment/Libraries
 URL: http://www.freetype.org
@@ -217,6 +217,9 @@ rm -rf $RPM_BUILD_ROOT
 %doc docs/tutorial
 
 %changelog
+* Mon Aug 05 2013 Marek Kasik <mkasik@redhat.com> - 2.5.0-3
+- Fix changelog dates
+
 * Mon Aug 05 2013 Marek Kasik <mkasik@redhat.com> - 2.5.0-2
 - Require libpng
 
@@ -342,7 +345,7 @@ rm -rf $RPM_BUILD_ROOT
 - Update to 2.4.2
 - Drop upstreamed patch, bytecode interpreter now on by default
 
-* Thu Feb 23 2010 Behdad Esfahbod <behdad@redhat.com> 2.3.12-1
+* Tue Feb 23 2010 Behdad Esfahbod <behdad@redhat.com> 2.3.12-1
 - Update to 2.3.12
 - Drop mathlib patch
 
@@ -369,7 +372,7 @@ rm -rf $RPM_BUILD_ROOT
 * Thu May  7 2009 Matthias Clasen <mclasen@redhat.com> 2.3.9-4
 - Don't own /usr/lib/pkgconfig
 
-* Wed Mar 27 2009 Behdad Esfahbod <besfahbo@redhat.com> 2.3.9-3
+* Fri Mar 27 2009 Behdad Esfahbod <besfahbo@redhat.com> 2.3.9-3
 - Disable subpixel hinting by default.  Was turned on unintentionally.
 
 * Wed Mar 25 2009 Behdad Esfahbod <besfahbo@redhat.com> 2.3.9-2
@@ -377,11 +380,11 @@ rm -rf $RPM_BUILD_ROOT
   with those options.
 - Resolves: #155210
 
-* Thu Mar 13 2009 Behdad Esfahbod <besfahbo@redhat.com> 2.3.9-1
+* Fri Mar 13 2009 Behdad Esfahbod <besfahbo@redhat.com> 2.3.9-1
 - Update to 2.3.9.
 - Resolves #489928
 
-* Thu Mar 09 2009 Behdad Esfahbod <besfahbo@redhat.com> 2.3.8-2.1
+* Mon Mar 09 2009 Behdad Esfahbod <besfahbo@redhat.com> 2.3.8-2.1
 - Preserve timestamp of FTL.TXT when converting to UTF-8.
 
 * Tue Feb 24 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2.3.8-2
@@ -401,7 +404,7 @@ rm -rf $RPM_BUILD_ROOT
 - Add freetype-autohinter-ligature.patch
 - Resolves: #368561
 
-* Tue Aug 14 2008 Behdad Esfahbod <besfahbo@redhat.com> 2.3.7-1
+* Thu Aug 14 2008 Behdad Esfahbod <besfahbo@redhat.com> 2.3.7-1
 - Update to 2.3.7
 
 * Tue Jun 10 2008 Behdad Esfahbod <besfahbo@redhat.com> 2.3.6-1
@@ -435,7 +438,7 @@ rm -rf $RPM_BUILD_ROOT
 * Thu Apr 12 2007 Behdad Esfahbod <besfahbo@redhat.com> 2.3.4-2
 - Add alpha to 64-bit archs (#236166)
 
-* Tue Apr 05 2007 Behdad Esfahbod <besfahbo@redhat.com> 2.3.4-1
+* Thu Apr 05 2007 Behdad Esfahbod <besfahbo@redhat.com> 2.3.4-1
 - Update to 2.3.4.
 
 * Thu Apr 05 2007 Behdad Esfahbod <besfahbo@redhat.com> 2.3.3-2
@@ -627,7 +630,7 @@ rm -rf $RPM_BUILD_ROOT
 - Add a patch to implement FT_LOAD_TARGET_LIGHT
 - Fix up freetype-1.4-libtool.patch 
 
-* Sat Dec 12 2002 Mike A. Harris <mharris@redhat.com> 2.1.3-2
+* Thu Dec 12 2002 Mike A. Harris <mharris@redhat.com> 2.1.3-2
 - Update to freetype 2.1.3
 - Removed ttmkfdir sources and patches, as they have been moved from the
   freetype packaging to XFree86 packaging, and now to the ttmkfdir package
