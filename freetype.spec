@@ -6,8 +6,8 @@
 
 Summary: A free and portable font rendering engine
 Name: freetype
-Version: 2.4.12
-Release: 6%{?dist}
+Version: 2.5.0
+Release: 1%{?dist}
 License: (FTL or GPLv2+) and BSD and MIT and Public Domain and zlib with acknowledgement
 Group: System Environment/Libraries
 URL: http://www.freetype.org
@@ -26,11 +26,11 @@ Patch47:  freetype-2.3.11-more-demos.patch
 # Fix multilib conflicts
 Patch88:  freetype-multilib.patch
 
-# https://bugzilla.redhat.com/show_bug.cgi?id=959771
-Patch89:  freetype-2.4.12-enable-adobe-cff-engine.patch
-
 # https://bugzilla.redhat.com/show_bug.cgi?id=961855
 Patch90:  freetype-2.4.12-pkgconfig.patch
+
+# Backport of all (2) commits from 2.5.0.1
+Patch91:  freetype-2.5.0.1.patch
 
 Buildroot: %{_tmppath}/%{name}-%{version}-root-%(%{__id_u} -n)
 
@@ -92,9 +92,9 @@ popd
 
 %patch88 -p1 -b .multilib
 
-%patch89 -p1 -b .adobe-cff
-
 %patch90 -p1 -b .pkgconfig
+
+%patch91 -p1 -b .2.5.0.1
 
 %build
 
@@ -216,6 +216,11 @@ rm -rf $RPM_BUILD_ROOT
 %doc docs/tutorial
 
 %changelog
+* Mon Aug 05 2013 Marek Kasik <mkasik@redhat.com> - 2.5.0-1
+- Update to 2.5.0
+- Backport changes from freetype-2.5.0.1
+-   (ft2demos-2.5.0.1 and freetype-doc-2.5.0.1 were not released)
+
 * Sat Aug 03 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2.4.12-6
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
 
