@@ -7,7 +7,7 @@
 Summary: A free and portable font rendering engine
 Name: freetype
 Version: 2.5.0
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: (FTL or GPLv2+) and BSD and MIT and Public Domain and zlib with acknowledgement
 Group: System Environment/Libraries
 URL: http://www.freetype.org
@@ -35,6 +35,7 @@ Patch91:  freetype-2.5.0.1.patch
 Buildroot: %{_tmppath}/%{name}-%{version}-root-%(%{__id_u} -n)
 
 BuildRequires: libX11-devel
+BuildRequires: libpng-devel
 
 Provides: %{name}-bytecode
 %if %{?_with_subpixel_rendering:1}%{!?_with_subpixel_rendering:0}
@@ -216,6 +217,9 @@ rm -rf $RPM_BUILD_ROOT
 %doc docs/tutorial
 
 %changelog
+* Mon Aug 05 2013 Marek Kasik <mkasik@redhat.com> - 2.5.0-2
+- Require libpng
+
 * Mon Aug 05 2013 Marek Kasik <mkasik@redhat.com> - 2.5.0-1
 - Update to 2.5.0
 - Backport changes from freetype-2.5.0.1
