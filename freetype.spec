@@ -7,7 +7,7 @@
 Summary: A free and portable font rendering engine
 Name: freetype
 Version: 2.5.0
-Release: 3%{?dist}
+Release: 4%{?dist}
 License: (FTL or GPLv2+) and BSD and MIT and Public Domain and zlib with acknowledgement
 Group: System Environment/Libraries
 URL: http://www.freetype.org
@@ -31,6 +31,9 @@ Patch90:  freetype-2.4.12-pkgconfig.patch
 
 # Backport of all (2) commits from 2.5.0.1
 Patch91:  freetype-2.5.0.1.patch
+
+# https://bugzilla.gnome.org/show_bug.cgi?id=686709
+Patch92:  0001-Fix-vertical-size-of-emboldened-glyphs.patch
 
 Buildroot: %{_tmppath}/%{name}-%{version}-root-%(%{__id_u} -n)
 
@@ -96,6 +99,8 @@ popd
 %patch90 -p1 -b .pkgconfig
 
 %patch91 -p1 -b .2.5.0.1
+
+%patch92 -p1 -b .emboldened-glyphs
 
 %build
 
@@ -217,6 +222,9 @@ rm -rf $RPM_BUILD_ROOT
 %doc docs/tutorial
 
 %changelog
+* Fri Sep 20 2013 Marek Kasik <mkasik@redhat.com> - 2.5.0-4
+- Fix vertical size of emboldened glyphs
+
 * Mon Aug 05 2013 Marek Kasik <mkasik@redhat.com> - 2.5.0-3
 - Fix changelog dates
 
