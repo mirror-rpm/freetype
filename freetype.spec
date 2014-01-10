@@ -7,7 +7,7 @@
 Summary: A free and portable font rendering engine
 Name: freetype
 Version: 2.5.0
-Release: 4%{?dist}
+Release: 5%{?dist}
 License: (FTL or GPLv2+) and BSD and MIT and Public Domain and zlib with acknowledgement
 Group: System Environment/Libraries
 URL: http://www.freetype.org
@@ -148,7 +148,7 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 # fix multilib issues
-%ifarch x86_64 s390x ia64 ppc64 alpha sparc64 aarch64
+%ifarch x86_64 s390x ia64 ppc64 ppc64le alpha sparc64 aarch64
 %define wordsize 64
 %else
 %define wordsize 32
@@ -222,6 +222,10 @@ rm -rf $RPM_BUILD_ROOT
 %doc docs/tutorial
 
 %changelog
+* Fri Jan 10 2014 Marek Kasik <mkasik@redhat.com> - 2.5.0-5
+- Enable ppc64le architecture
+- Resolves: #1051202
+
 * Fri Sep 20 2013 Marek Kasik <mkasik@redhat.com> - 2.5.0-4
 - Fix vertical size of emboldened glyphs
 
