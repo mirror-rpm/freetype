@@ -6,8 +6,8 @@
 
 Summary: A free and portable font rendering engine
 Name: freetype
-Version: 2.5.0
-Release: 5%{?dist}
+Version: 2.5.2
+Release: 1%{?dist}
 License: (FTL or GPLv2+) and BSD and MIT and Public Domain and zlib with acknowledgement
 Group: System Environment/Libraries
 URL: http://www.freetype.org
@@ -21,19 +21,13 @@ Patch21:  freetype-2.3.0-enable-spr.patch
 # Enable otvalid and gxvalid modules
 Patch46:  freetype-2.2.1-enable-valid.patch
 # Enable additional demos
-Patch47:  freetype-2.3.11-more-demos.patch
+Patch47:  freetype-2.5.2-more-demos.patch
 
 # Fix multilib conflicts
 Patch88:  freetype-multilib.patch
 
 # https://bugzilla.redhat.com/show_bug.cgi?id=961855
 Patch90:  freetype-2.4.12-pkgconfig.patch
-
-# Backport of all (2) commits from 2.5.0.1
-Patch91:  freetype-2.5.0.1.patch
-
-# https://bugzilla.gnome.org/show_bug.cgi?id=686709
-Patch92:  0001-Fix-vertical-size-of-emboldened-glyphs.patch
 
 Buildroot: %{_tmppath}/%{name}-%{version}-root-%(%{__id_u} -n)
 
@@ -98,10 +92,6 @@ popd
 
 %patch90 -p1 -b .pkgconfig
 
-%patch91 -p1 -b .2.5.0.1
-
-%patch92 -p1 -b .emboldened-glyphs
-
 %build
 
 %configure --disable-static
@@ -154,9 +144,9 @@ rm -rf $RPM_BUILD_ROOT
 %define wordsize 32
 %endif
 
-mv $RPM_BUILD_ROOT%{_includedir}/freetype2/freetype/config/ftconfig.h \
-   $RPM_BUILD_ROOT%{_includedir}/freetype2/freetype/config/ftconfig-%{wordsize}.h
-install -p -m 644 %{SOURCE3} $RPM_BUILD_ROOT%{_includedir}/freetype2/freetype/config/ftconfig.h
+mv $RPM_BUILD_ROOT%{_includedir}/freetype2/config/ftconfig.h \
+   $RPM_BUILD_ROOT%{_includedir}/freetype2/config/ftconfig-%{wordsize}.h
+install -p -m 644 %{SOURCE3} $RPM_BUILD_ROOT%{_includedir}/freetype2/config/ftconfig.h
 
 # Don't package static a or .la files
 rm -f $RPM_BUILD_ROOT%{_libdir}/*.{a,la}
@@ -212,7 +202,6 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_includedir}/freetype2
 %{_datadir}/aclocal/freetype2.m4
 %{_includedir}/freetype2/*
-%{_includedir}/*.h
 %{_libdir}/libfreetype.so
 %{_bindir}/freetype-config
 %{_libdir}/pkgconfig/freetype2.pc
@@ -222,6 +211,11 @@ rm -rf $RPM_BUILD_ROOT
 %doc docs/tutorial
 
 %changelog
+* Fri Jan 17 2014 Marek Kasik <mkasik@redhat.com> - 2.5.2-1
+- Update to 2.5.2
+- Modify spec file to respect the new header file layout
+- Resolves: #1034065
+
 * Fri Jan 10 2014 Marek Kasik <mkasik@redhat.com> - 2.5.0-5
 - Enable ppc64le architecture
 - Resolves: #1051202
