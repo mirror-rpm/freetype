@@ -7,7 +7,7 @@
 Summary: A free and portable font rendering engine
 Name: freetype
 Version: 2.5.3
-Release: 2%{?dist}
+Release: 3%{?dist}
 License: (FTL or GPLv2+) and BSD and MIT and Public Domain and zlib with acknowledgement
 Group: System Environment/Libraries
 URL: http://www.freetype.org
@@ -66,8 +66,6 @@ small utilities showing various capabilities of the FreeType library.
 Summary: FreeType development libraries and header files
 Group: Development/Libraries
 Requires: %{name} = %{version}-%{release}
-Requires: zlib-devel
-Requires: pkgconfig
 
 %description devel
 The freetype-devel package includes the static libraries and header files
@@ -123,6 +121,9 @@ popd
 %install
 rm -rf $RPM_BUILD_ROOT
 
+
+# HACK - drop private libs from freetype-config --libs option
+sed -i -e 's| -lz -lbz2 -lpng16||' builds/unix/freetype-config
 
 %makeinstall gnulocaledir=$RPM_BUILD_ROOT%{_datadir}/locale
 
@@ -214,6 +215,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/*
 
 %changelog
+* Fri Mar 21 2014 Dan Horák <dan[at]danny.cz> - 2.5.3-3
+- drop private libs from freetype-config so it returns the same libs as pkg-config
+
 * Tue Mar 11 2014 Marek Kasik <mkasik@redhat.com> - 2.5.3-2
 - Enable support for bzip2 compressed fonts
 
