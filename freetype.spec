@@ -7,7 +7,7 @@
 Summary: A free and portable font rendering engine
 Name: freetype
 Version: 2.5.3
-Release: 4%{?dist}
+Release: 5%{?dist}
 License: (FTL or GPLv2+) and BSD and MIT and Public Domain and zlib with acknowledgement
 Group: System Environment/Libraries
 URL: http://www.freetype.org
@@ -99,7 +99,11 @@ popd
 
 %build
 
-%configure --disable-static
+%configure --disable-static \
+           --with-zlib=yes \
+           --with-bzip2=yes \
+           --with-png=yes \
+           --with-harfbuzz=no
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' builds/unix/libtool
 sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' builds/unix/libtool
 make %{?_smp_mflags}
@@ -217,6 +221,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/*
 
 %changelog
+* Tue Mar 25 2014 Marek Kasik <mkasik@redhat.com> - 2.5.3-5
+- Be explicit about required libraries
+
 * Tue Mar 25 2014 Marek Kasik <mkasik@redhat.com> - 2.5.3-4
 - Don't return flags of privately used libraries when
 - calling "freetype-config --libs"
