@@ -7,7 +7,7 @@
 Summary: A free and portable font rendering engine
 Name: freetype
 Version: 2.5.3
-Release: 3%{?dist}
+Release: 4%{?dist}
 License: (FTL or GPLv2+) and BSD and MIT and Public Domain and zlib with acknowledgement
 Group: System Environment/Libraries
 URL: http://www.freetype.org
@@ -28,6 +28,9 @@ Patch88:  freetype-multilib.patch
 
 # https://bugzilla.redhat.com/show_bug.cgi?id=961855
 Patch90:  freetype-2.4.12-pkgconfig.patch
+
+# https://bugzilla.redhat.com/show_bug.cgi?id=1079302
+Patch91:  freetype-2.5.3-freetype-config-libs.patch
 
 Buildroot: %{_tmppath}/%{name}-%{version}-root-%(%{__id_u} -n)
 
@@ -92,6 +95,8 @@ popd
 
 %patch90 -p1 -b .pkgconfig
 
+%patch91 -p1 -b .freetype-config-libs
+
 %build
 
 %configure --disable-static
@@ -121,9 +126,6 @@ popd
 %install
 rm -rf $RPM_BUILD_ROOT
 
-
-# HACK - drop private libs from freetype-config --libs option
-sed -i -e 's| -lz -lbz2 -lpng16||' builds/unix/freetype-config
 
 %makeinstall gnulocaledir=$RPM_BUILD_ROOT%{_datadir}/locale
 
@@ -215,6 +217,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/*
 
 %changelog
+* Tue Mar 25 2014 Marek Kasik <mkasik@redhat.com> - 2.5.3-4
+- Don't return flags of privately used libraries when
+- calling "freetype-config --libs"
+- Resolves: #1079302
+
 * Fri Mar 21 2014 Dan Horák <dan[at]danny.cz> - 2.5.3-3
 - drop private libs from freetype-config so it returns the same libs as pkg-config
 
