@@ -7,7 +7,7 @@
 Summary: A free and portable font rendering engine
 Name: freetype
 Version: 2.5.3
-Release: 6%{?dist}
+Release: 7%{?dist}
 License: (FTL or GPLv2+) and BSD and MIT and Public Domain and zlib with acknowledgement
 Group: System Environment/Libraries
 URL: http://www.freetype.org
@@ -147,7 +147,7 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 # fix multilib issues
-%ifarch x86_64 s390x ia64 ppc64 ppc64le alpha sparc64 aarch64
+%if %{__isa_bits} == 64
 %define wordsize 64
 %else
 %define wordsize 32
@@ -221,6 +221,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/*
 
 %changelog
+* Sat Aug  2 2014 Peter Robinson <pbrobinson@redhat.com> 2.5.3-7
+- Generic 32/64 bit platform detection (fix it once and for all)
+
 * Sat Jun 07 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2.5.3-6
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
 
