@@ -7,7 +7,7 @@
 Summary: A free and portable font rendering engine
 Name: freetype
 Version: 2.5.3
-Release: 9%{?dist}
+Release: 10%{?dist}
 License: (FTL or GPLv2+) and BSD and MIT and Public Domain and zlib with acknowledgement
 Group: System Environment/Libraries
 URL: http://www.freetype.org
@@ -217,6 +217,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/*
 
 %changelog
+* Tue Oct 21 2014 Marek Kasik <mkasik@redhat.com> - 2.5.3-10
+- Fix patch which enables subpixel rendering
+- Resolves: #1154448
+
 * Mon Aug 18 2014 Marek Kasik <mkasik@redhat.com> - 2.5.3-9
 - Simplify getting of wordsize
 
