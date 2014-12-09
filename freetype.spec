@@ -6,8 +6,8 @@
 
 Summary: A free and portable font rendering engine
 Name: freetype
-Version: 2.5.3
-Release: 11%{?dist}
+Version: 2.5.4
+Release: 1%{?dist}
 License: (FTL or GPLv2+) and BSD and MIT and Public Domain and zlib with acknowledgement
 Group: System Environment/Libraries
 URL: http://www.freetype.org
@@ -25,12 +25,6 @@ Patch47:  freetype-2.5.2-more-demos.patch
 
 # Fix multilib conflicts
 Patch88:  freetype-multilib.patch
-
-# https://bugzilla.redhat.com/show_bug.cgi?id=961855
-Patch90:  freetype-2.4.12-pkgconfig.patch
-
-# https://bugzilla.redhat.com/show_bug.cgi?id=1079302
-Patch91:  freetype-2.5.3-freetype-config-libs.patch
 
 # https://bugzilla.redhat.com/show_bug.cgi?id=1161963
 Patch92:  freetype-2.5.3-freetype-config-prefix.patch
@@ -95,10 +89,6 @@ pushd ft2demos-%{version}
 popd
 
 %patch88 -p1 -b .multilib
-
-%patch90 -p1 -b .pkgconfig
-
-%patch91 -p1 -b .freetype-config-libs
 
 %patch92 -p1 -b .freetype-config-prefix
 
@@ -222,6 +212,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/*
 
 %changelog
+* Tue Dec  9 2014 Marek Kasik <mkasik@redhat.com> - 2.5.4-1
+- Update to 2.5.4
+- Resolves: #1171504
+
 * Tue Nov 11 2014 Marek Kasik <mkasik@redhat.com> - 2.5.3-11
 - Fix directories returned by freetype-config with modified prefix
 - Resolves: #1161963
