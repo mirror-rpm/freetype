@@ -6,7 +6,7 @@
 
 Summary: A free and portable font rendering engine
 Name: freetype
-Version: 2.5.4
+Version: 2.5.5
 Release: 1%{?dist}
 License: (FTL or GPLv2+) and BSD and MIT and Public Domain and zlib with acknowledgement
 Group: System Environment/Libraries
@@ -212,6 +212,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/*
 
 %changelog
+* Tue Jan  6 2015 Marek Kasik <mkasik@redhat.com> - 2.5.5-1
+- Update to 2.5.5
+- Resolves: #1178876
+
 * Tue Dec  9 2014 Marek Kasik <mkasik@redhat.com> - 2.5.4-1
 - Update to 2.5.4
 - Resolves: #1171504
