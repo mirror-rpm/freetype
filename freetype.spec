@@ -4,16 +4,18 @@
 
 %{!?with_xfree86:%define with_xfree86 1}
 
+%define version26 2.6
+
 Summary: A free and portable font rendering engine
 Name: freetype
-Version: 2.5.5
+Version: 2.6.0
 Release: 1%{?dist}
 License: (FTL or GPLv2+) and BSD and MIT and Public Domain and zlib with acknowledgement
 Group: System Environment/Libraries
 URL: http://www.freetype.org
-Source:  http://download.savannah.gnu.org/releases/freetype/freetype-%{version}.tar.bz2
-Source1: http://download.savannah.gnu.org/releases/freetype/freetype-doc-%{version}.tar.bz2
-Source2: http://download.savannah.gnu.org/releases/freetype/ft2demos-%{version}.tar.bz2
+Source:  http://download.savannah.gnu.org/releases/freetype/freetype-%{version26}.tar.bz2
+Source1: http://download.savannah.gnu.org/releases/freetype/freetype-doc-%{version26}.tar.bz2
+Source2: http://download.savannah.gnu.org/releases/freetype/ft2demos-%{version26}.tar.bz2
 Source3: ftconfig.h
 
 Patch21:  freetype-2.3.0-enable-spr.patch
@@ -76,7 +78,7 @@ FreeType.
 
 
 %prep
-%setup -q -b 1 -a 2
+%setup -q -b 1 -a 2 -n %{name}-%{version26}
 
 %if %{?_with_subpixel_rendering:1}%{!?_with_subpixel_rendering:0}
 %patch21  -p1 -b .enable-spr
@@ -84,7 +86,7 @@ FreeType.
 
 %patch46  -p1 -b .enable-valid
 
-pushd ft2demos-%{version}
+pushd ft2demos-%{version26}
 %patch47  -p1 -b .more-demos
 popd
 
@@ -105,7 +107,7 @@ make %{?_smp_mflags}
 
 %if %{with_xfree86}
 # Build demos
-pushd ft2demos-%{version}
+pushd ft2demos-%{version26}
 make TOP_DIR=".."
 popd
 %endif
@@ -130,13 +132,13 @@ rm -rf $RPM_BUILD_ROOT
 
 {
   for ftdemo in ftbench ftchkwd ftmemchk ftpatchk fttimer ftdump ftlint ftmemchk ftvalid ; do
-      builds/unix/libtool --mode=install install -m 755 ft2demos-%{version}/bin/$ftdemo $RPM_BUILD_ROOT/%{_bindir}
+      builds/unix/libtool --mode=install install -m 755 ft2demos-%{version26}/bin/$ftdemo $RPM_BUILD_ROOT/%{_bindir}
   done
 }
 %if %{with_xfree86}
 {
   for ftdemo in ftdiff ftgamma ftgrid ftmulti ftstring fttimer ftview ; do
-      builds/unix/libtool --mode=install install -m 755 ft2demos-%{version}/bin/$ftdemo $RPM_BUILD_ROOT/%{_bindir}
+      builds/unix/libtool --mode=install install -m 755 ft2demos-%{version26}/bin/$ftdemo $RPM_BUILD_ROOT/%{_bindir}
   done
 }
 %endif
@@ -212,6 +214,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/*
 
 %changelog
+* Fri Jun 12 2015 Marek Kasik <mkasik@redhat.com> - 2.6.0-1
+- Update to 2.6
+- Resolves: #1229688
+
 * Tue Jan  6 2015 Marek Kasik <mkasik@redhat.com> - 2.5.5-1
 - Update to 2.5.5
 - Resolves: #1178876
