@@ -9,7 +9,7 @@
 Summary: A free and portable font rendering engine
 Name: freetype
 Version: 2.6.0
-Release: 2%{?dist}
+Release: 3%{?dist}
 License: (FTL or GPLv2+) and BSD and MIT and Public Domain and zlib with acknowledgement
 Group: System Environment/Libraries
 URL: http://www.freetype.org
@@ -17,6 +17,8 @@ Source:  http://download.savannah.gnu.org/releases/freetype/freetype-%{version26
 Source1: http://download.savannah.gnu.org/releases/freetype/freetype-doc-%{version26}.tar.bz2
 Source2: http://download.savannah.gnu.org/releases/freetype/ft2demos-%{version26}.tar.bz2
 Source3: ftconfig.h
+
+Patch0:   0001-cff-Don-t-use-hmtx-table-for-LSB-45520.patch
 
 Patch21:  freetype-2.3.0-enable-spr.patch
 
@@ -79,6 +81,8 @@ FreeType.
 
 %prep
 %setup -q -b 1 -a 2 -n %{name}-%{version26}
+
+%patch0  -p1 -b .hmtx-table
 
 %if %{?_with_subpixel_rendering:1}%{!?_with_subpixel_rendering:0}
 %patch21  -p1 -b .enable-spr
@@ -214,6 +218,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/*
 
 %changelog
+* Tue Jul 28 2015 Marek Kasik <mkasik@redhat.com> - 2.6.0-3
+- Don't use `hmtx' table for LSB
+
 * Wed Jun 17 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2.6.0-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
 
