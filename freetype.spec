@@ -6,7 +6,7 @@
 
 Summary: A free and portable font rendering engine
 Name: freetype
-Version: 2.6.1
+Version: 2.6.2
 Release: 1%{?dist}
 License: (FTL or GPLv2+) and BSD and MIT and Public Domain and zlib with acknowledgement
 Group: System Environment/Libraries
@@ -212,6 +212,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/*
 
 %changelog
+* Thu Dec  3 2015 Tom Callaway <spot@fedoraproject.org> - 2.6.2-1
+- update to 2.6.2
+
 * Mon Oct 12 2015 Marek Kasik <mkasik@redhat.com> - 2.6.1-1
 - Update to 2.6.1
 - Adapt to the new header structure
