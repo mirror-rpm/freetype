@@ -7,7 +7,7 @@
 Summary: A free and portable font rendering engine
 Name: freetype
 Version: 2.6.3
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: (FTL or GPLv2+) and BSD and MIT and Public Domain and zlib with acknowledgement
 Group: System Environment/Libraries
 URL: http://www.freetype.org
@@ -28,8 +28,6 @@ Patch88:  freetype-multilib.patch
 
 # https://bugzilla.redhat.com/show_bug.cgi?id=1161963
 Patch92:  freetype-2.5.3-freetype-config-prefix.patch
-
-Buildroot: %{_tmppath}/%{name}-%{version}-root-%(%{__id_u} -n)
 
 BuildRequires: libX11-devel
 BuildRequires: libpng-devel
@@ -123,8 +121,6 @@ popd
 
 
 %install
-rm -rf $RPM_BUILD_ROOT
-
 
 %makeinstall gnulocaledir=$RPM_BUILD_ROOT%{_datadir}/locale
 
@@ -151,8 +147,6 @@ install -p -m 644 %{SOURCE3} $RPM_BUILD_ROOT%{_includedir}/freetype2/freetype/co
 # Don't package static a or .la files
 rm -f $RPM_BUILD_ROOT%{_libdir}/*.{a,la}
 
-%clean
-rm -rf $RPM_BUILD_ROOT
 
 %triggerpostun -- freetype < 2.0.5-3
 {
@@ -169,14 +163,12 @@ rm -rf $RPM_BUILD_ROOT
 %postun -p /sbin/ldconfig
 
 %files
-%defattr(-,root,root)
+%{!?_licensedir:%global license %%doc}
+%license docs/LICENSE.TXT docs/FTL.TX docs/GPLv2.TXTT
 %{_libdir}/libfreetype.so.*
 %doc README
-%doc docs/LICENSE.TXT docs/FTL.TXT docs/GPLv2.TXT
-%doc docs/CHANGES docs/VERSION.DLL docs/formats.txt docs/ft2faq.html
 
 %files demos
-%defattr(-,root,root)
 %{_bindir}/ftbench
 %{_bindir}/ftchkwd
 %{_bindir}/ftmemchk
@@ -198,7 +190,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc ChangeLog README
 
 %files devel
-%defattr(-,root,root)
+%doc docs/CHANGES docs/formats.txt docs/ft2faq.html
 %dir %{_includedir}/freetype2
 %{_datadir}/aclocal/freetype2.m4
 %{_includedir}/freetype2/*
@@ -212,6 +204,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/*
 
 %changelog
+* Sat Mar  5 2016 Peter Robinson <pbrobinson@fedoraproject.org> 2.6.3-2
+- Use %%license and cleanup spec
+- Move dev docs to devel package
+
 * Wed Feb 10 2016 Marek Kasik <mkasik@redhat.com> - 2.6.3-1
 - Update to 2.6.3
 
