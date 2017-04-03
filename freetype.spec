@@ -7,7 +7,7 @@
 Summary: A free and portable font rendering engine
 Name: freetype
 Version: 2.7.1
-Release: 2%{?dist}
+Release: 3%{?dist}
 License: (FTL or GPLv2+) and BSD and MIT and Public Domain and zlib with acknowledgement
 Group: System Environment/Libraries
 URL: http://www.freetype.org
@@ -30,6 +30,9 @@ Patch88:  freetype-multilib.patch
 Patch92:  freetype-2.5.3-freetype-config-prefix.patch
 
 Patch93:  freetype-2.6.5-libtool.patch
+
+# https://bugzilla.redhat.com/show_bug.cgi?id=1437999
+Patch94:  freetype-2.7.1-linear-scaling.patch
 
 BuildRequires: libX11-devel
 BuildRequires: libpng-devel
@@ -93,6 +96,8 @@ popd
 %patch92 -p1 -b .freetype-config-prefix
 
 %patch93 -p1 -b .libtool
+
+%patch94 -p1 -b .linear-scaling
 
 %build
 
@@ -208,6 +213,10 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.{a,la}
 %{_mandir}/man1/*
 
 %changelog
+* Mon Apr  3 2017 Marek Kasik <mkasik@redhat.com> - 2.7.1-3
+- Allow linear scaling for unhinted rendering
+- Resolves: #1437999
+
 * Fri Feb 10 2017 Fedora Release Engineering <releng@fedoraproject.org> - 2.7.1-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_26_Mass_Rebuild
 
