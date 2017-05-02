@@ -7,7 +7,7 @@
 Summary: A free and portable font rendering engine
 Name: freetype
 Version: 2.7.1
-Release: 5%{?dist}
+Release: 6%{?dist}
 License: (FTL or GPLv2+) and BSD and MIT and Public Domain and zlib with acknowledgement
 Group: System Environment/Libraries
 URL: http://www.freetype.org
@@ -33,6 +33,9 @@ Patch5:  freetype-2.6.5-libtool.patch
 
 # https://bugzilla.redhat.com/show_bug.cgi?id=1446500
 Patch6:  freetype-2.7.1-protect-flex-handling.patch
+
+# https://bugzilla.redhat.com/show_bug.cgi?id=1446073
+Patch7:  freetype-2.7.1-safety-guard.patch
 
 
 BuildRequires: libX11-devel
@@ -96,6 +99,7 @@ popd
 %patch4 -p1 -b .freetype-config-prefix
 %patch5 -p1 -b .libtool
 %patch6 -p1 -b .protect-flex-handling
+%patch7 -p1 -b .safety-guard
 
 %build
 
@@ -211,6 +215,10 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.{a,la}
 %{_mandir}/man1/*
 
 %changelog
+* Tue May  2 2017 Marek Kasik <mkasik@redhat.com> - 2.7.1-6
+- Add safety guard (CVE-2017-8287)
+- Resolves: #1446075
+
 * Tue May  2 2017 Marek Kasik <mkasik@redhat.com> - 2.7.1-5
 - Better protect `flex' handling (CVE-2017-8105)
 - Resolves: #1446502
