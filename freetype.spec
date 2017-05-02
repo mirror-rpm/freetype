@@ -7,7 +7,7 @@
 Summary: A free and portable font rendering engine
 Name: freetype
 Version: 2.7.1
-Release: 6%{?dist}
+Release: 7%{?dist}
 License: (FTL or GPLv2+) and BSD and MIT and Public Domain and zlib with acknowledgement
 Group: System Environment/Libraries
 URL: http://www.freetype.org
@@ -215,13 +215,16 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.{a,la}
 %{_mandir}/man1/*
 
 %changelog
+* Tue May  2 2017 Marek Kasik <mkasik@redhat.com> - 2.7.1-7
+- Fix numbers of tracking bugs
+
 * Tue May  2 2017 Marek Kasik <mkasik@redhat.com> - 2.7.1-6
 - Add safety guard (CVE-2017-8287)
-- Resolves: #1446075
+- Resolves: #1446074
 
 * Tue May  2 2017 Marek Kasik <mkasik@redhat.com> - 2.7.1-5
 - Better protect `flex' handling (CVE-2017-8105)
-- Resolves: #1446502
+- Resolves: #1446501
 
 * Mon Apr 10 2017 Marek Kasik <mkasik@redhat.com> - 2.7.1-4
 - Revert previous commit
