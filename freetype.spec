@@ -7,7 +7,7 @@
 Summary: A free and portable font rendering engine
 Name: freetype
 Version: 2.7.1
-Release: 4%{?dist}
+Release: 5%{?dist}
 License: (FTL or GPLv2+) and BSD and MIT and Public Domain and zlib with acknowledgement
 Group: System Environment/Libraries
 URL: http://www.freetype.org
@@ -16,20 +16,24 @@ Source1: http://download.savannah.gnu.org/releases/freetype/freetype-doc-%{versi
 Source2: http://download.savannah.gnu.org/releases/freetype/ft2demos-%{version}.tar.bz2
 Source3: ftconfig.h
 
-Patch21:  freetype-2.3.0-enable-spr.patch
+Patch0:  freetype-2.3.0-enable-spr.patch
 
 # Enable otvalid and gxvalid modules
-Patch46:  freetype-2.2.1-enable-valid.patch
+Patch1:  freetype-2.2.1-enable-valid.patch
 # Enable additional demos
-Patch47:  freetype-2.5.2-more-demos.patch
+Patch2:  freetype-2.5.2-more-demos.patch
 
 # Fix multilib conflicts
-Patch88:  freetype-multilib.patch
+Patch3:  freetype-multilib.patch
 
 # https://bugzilla.redhat.com/show_bug.cgi?id=1161963
-Patch92:  freetype-2.5.3-freetype-config-prefix.patch
+Patch4:  freetype-2.5.3-freetype-config-prefix.patch
 
-Patch93:  freetype-2.6.5-libtool.patch
+Patch5:  freetype-2.6.5-libtool.patch
+
+# https://bugzilla.redhat.com/show_bug.cgi?id=1446500
+Patch6:  freetype-2.7.1-protect-flex-handling.patch
+
 
 BuildRequires: libX11-devel
 BuildRequires: libpng-devel
@@ -79,20 +83,19 @@ FreeType.
 %setup -q -b 1 -a 2
 
 %if %{?_with_subpixel_rendering:1}%{!?_with_subpixel_rendering:0}
-%patch21  -p1 -b .enable-spr
+%patch0  -p1 -b .enable-spr
 %endif
 
-%patch46  -p1 -b .enable-valid
+%patch1  -p1 -b .enable-valid
 
 pushd ft2demos-%{version}
-%patch47  -p1 -b .more-demos
+%patch2  -p1 -b .more-demos
 popd
 
-%patch88 -p1 -b .multilib
-
-%patch92 -p1 -b .freetype-config-prefix
-
-%patch93 -p1 -b .libtool
+%patch3 -p1 -b .multilib
+%patch4 -p1 -b .freetype-config-prefix
+%patch5 -p1 -b .libtool
+%patch6 -p1 -b .protect-flex-handling
 
 %build
 
@@ -208,6 +211,10 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.{a,la}
 %{_mandir}/man1/*
 
 %changelog
+* Tue May  2 2017 Marek Kasik <mkasik@redhat.com> - 2.7.1-5
+- Better protect `flex' handling (CVE-2017-8105)
+- Resolves: #1446502
+
 * Mon Apr 10 2017 Marek Kasik <mkasik@redhat.com> - 2.7.1-4
 - Revert previous commit
 - Related: #1437999
