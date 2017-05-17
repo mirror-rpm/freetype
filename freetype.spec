@@ -6,8 +6,8 @@
 
 Summary: A free and portable font rendering engine
 Name: freetype
-Version: 2.7.1
-Release: 7%{?dist}
+Version: 2.8
+Release: 1%{?dist}
 License: (FTL or GPLv2+) and BSD and MIT and Public Domain and zlib with acknowledgement
 Group: System Environment/Libraries
 URL: http://www.freetype.org
@@ -23,20 +23,7 @@ Patch1:  freetype-2.2.1-enable-valid.patch
 # Enable additional demos
 Patch2:  freetype-2.5.2-more-demos.patch
 
-# Fix multilib conflicts
-Patch3:  freetype-multilib.patch
-
-# https://bugzilla.redhat.com/show_bug.cgi?id=1161963
-Patch4:  freetype-2.5.3-freetype-config-prefix.patch
-
-Patch5:  freetype-2.6.5-libtool.patch
-
-# https://bugzilla.redhat.com/show_bug.cgi?id=1446500
-Patch6:  freetype-2.7.1-protect-flex-handling.patch
-
-# https://bugzilla.redhat.com/show_bug.cgi?id=1446073
-Patch7:  freetype-2.7.1-safety-guard.patch
-
+Patch3:  freetype-2.6.5-libtool.patch
 
 BuildRequires: libX11-devel
 BuildRequires: libpng-devel
@@ -95,11 +82,7 @@ pushd ft2demos-%{version}
 %patch2  -p1 -b .more-demos
 popd
 
-%patch3 -p1 -b .multilib
-%patch4 -p1 -b .freetype-config-prefix
-%patch5 -p1 -b .libtool
-%patch6 -p1 -b .protect-flex-handling
-%patch7 -p1 -b .safety-guard
+%patch3 -p1 -b .libtool
 
 %build
 
@@ -133,7 +116,7 @@ popd
 
 %install
 
-%makeinstall gnulocaledir=$RPM_BUILD_ROOT%{_datadir}/locale
+%make_install gnulocaledir=$RPM_BUILD_ROOT%{_datadir}/locale
 
 {
   for ftdemo in ftbench ftchkwd ftmemchk ftpatchk fttimer ftdump ftlint ftmemchk ftvalid ; do
@@ -187,7 +170,6 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.{a,la}
 %{_bindir}/fttimer
 %{_bindir}/ftdump
 %{_bindir}/ftlint
-%{_bindir}/ftmemchk
 %{_bindir}/ftvalid
 %if %{with_xfree86}
 %{_bindir}/ftdiff
@@ -195,7 +177,6 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.{a,la}
 %{_bindir}/ftgrid
 %{_bindir}/ftmulti
 %{_bindir}/ftstring
-%{_bindir}/fttimer
 %{_bindir}/ftview
 %endif
 %doc ChangeLog README
@@ -215,6 +196,11 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.{a,la}
 %{_mandir}/man1/*
 
 %changelog
+* Wed May 17 2017 Marek Kasik <mkasik@redhat.com> - 2.8-1
+- Update to 2.8
+- Modify/remove patches as needed
+- Resolves: #1450581
+
 * Tue May  2 2017 Marek Kasik <mkasik@redhat.com> - 2.7.1-7
 - Fix numbers of tracking bugs
 
