@@ -7,7 +7,7 @@
 Summary: A free and portable font rendering engine
 Name: freetype
 Version: 2.8
-Release: 7%{?dist}
+Release: 8%{?dist}
 License: (FTL or GPLv2+) and BSD and MIT and Public Domain and zlib with acknowledgement
 Group: System Environment/Libraries
 URL: http://www.freetype.org
@@ -167,9 +167,7 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.{a,la}
   exit 0
 }
 
-%post -p /sbin/ldconfig
-
-%postun -p /sbin/ldconfig
+%ldconfig_scriptlets
 
 %files
 %{!?_licensedir:%global license %%doc}
@@ -211,6 +209,9 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.{a,la}
 %{_mandir}/man1/*
 
 %changelog
+* Fri Feb 02 2018 Igor Gnatenko <ignatenkobrain@fedoraproject.org> - 2.8-8
+- Switch to %%ldconfig_scriptlets
+
 * Mon Oct  9 2017 Marek Kasik <mkasik@redhat.com> - 2.8-7
 - Require pkgconf so we can make freetype-config multilib compatible again
 - Resolves: #1497443
