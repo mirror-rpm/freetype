@@ -7,7 +7,7 @@
 Summary: A free and portable font rendering engine
 Name: freetype
 Version: 2.8
-Release: 9%{?dist}
+Release: 10%{?dist}
 License: (FTL or GPLv2+) and BSD and MIT and Public Domain and zlib with acknowledgement
 Group: System Environment/Libraries
 URL: http://www.freetype.org
@@ -33,6 +33,8 @@ Patch6:  0077-truetype-Fix-loading-of-named-instances.patch
 Patch7:  0079-src-truetype-ttgxvar.c-TT_Get_MM_Var-Fix-thinko.patch
 
 Patch8:  freetype-2.8-multilib.patch
+
+Patch9:  freetype-2.8-getvariation.patch
 
 BuildRequires: libX11-devel
 BuildRequires: libpng-devel
@@ -98,6 +100,7 @@ popd
 %patch6 -p1 -b .named-instances
 %patch7 -p1 -b .named-instances2
 %patch8 -p1 -b .multilib
+%patch9 -p1 -b .getvariation
 
 %build
 
@@ -209,6 +212,10 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.{a,la}
 %{_mandir}/man1/*
 
 %changelog
+* Fri Feb 16 2018 Marek Kasik <mkasik@redhat.com> - 2.8-10
+- Avoid NULL reference
+- Resolves: #1544776
+
 * Wed Feb 07 2018 Fedora Release Engineering <releng@fedoraproject.org> - 2.8-9
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_28_Mass_Rebuild
 
