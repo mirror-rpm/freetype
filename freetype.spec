@@ -6,8 +6,8 @@
 
 Summary: A free and portable font rendering engine
 Name: freetype
-Version: 2.8
-Release: 10%{?dist}
+Version: 2.9
+Release: 1%{?dist}
 License: (FTL or GPLv2+) and BSD and MIT and Public Domain and zlib with acknowledgement
 Group: System Environment/Libraries
 URL: http://www.freetype.org
@@ -25,16 +25,11 @@ Patch2:  freetype-2.5.2-more-demos.patch
 
 Patch3:  freetype-2.6.5-libtool.patch
 
-Patch4:  freetype-2.8-pcf-encoding.patch
+Patch4:  freetype-2.8-multilib.patch
 
-Patch5:  freetype-2.8-loop-counter.patch
+Patch5:  freetype-2.8-getvariation.patch
 
-Patch6:  0077-truetype-Fix-loading-of-named-instances.patch
-Patch7:  0079-src-truetype-ttgxvar.c-TT_Get_MM_Var-Fix-thinko.patch
-
-Patch8:  freetype-2.8-multilib.patch
-
-Patch9:  freetype-2.8-getvariation.patch
+Patch6:  freetype-2.9-ftsmooth.patch
 
 BuildRequires: libX11-devel
 BuildRequires: libpng-devel
@@ -95,12 +90,9 @@ pushd ft2demos-%{version}
 popd
 
 %patch3 -p1 -b .libtool
-%patch4 -p1 -b .pcf-encoding
-%patch5 -p1 -b .loop-counter
-%patch6 -p1 -b .named-instances
-%patch7 -p1 -b .named-instances2
-%patch8 -p1 -b .multilib
-%patch9 -p1 -b .getvariation
+%patch4 -p1 -b .multilib
+%patch5 -p1 -b .getvariation
+%patch6 -p1 -b .ftsmooth
 
 %build
 
@@ -212,6 +204,11 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.{a,la}
 %{_mandir}/man1/*
 
 %changelog
+* Tue Mar 20 2018 Marek Kasik <mkasik@redhat.com> - 2.9-1
+- Update to 2.9
+- Add/modify/remove patches as needed
+- Resolves: #1492372
+
 * Fri Feb 16 2018 Marek Kasik <mkasik@redhat.com> - 2.8-10
 - Avoid NULL reference
 - Resolves: #1544776
