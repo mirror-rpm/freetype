@@ -6,7 +6,7 @@
 
 Summary: A free and portable font rendering engine
 Name: freetype
-Version: 2.9
+Version: 2.9.1
 Release: 1%{?dist}
 License: (FTL or GPLv2+) and BSD and MIT and Public Domain and zlib with acknowledgement
 Group: System Environment/Libraries
@@ -27,9 +27,7 @@ Patch3:  freetype-2.6.5-libtool.patch
 
 Patch4:  freetype-2.8-multilib.patch
 
-Patch5:  freetype-2.8-getvariation.patch
-
-Patch6:  freetype-2.9-ftsmooth.patch
+Patch5:  freetype-2.9-ftsmooth.patch
 
 BuildRequires: libX11-devel
 BuildRequires: libpng-devel
@@ -91,8 +89,7 @@ popd
 
 %patch3 -p1 -b .libtool
 %patch4 -p1 -b .multilib
-%patch5 -p1 -b .getvariation
-%patch6 -p1 -b .ftsmooth
+%patch5 -p1 -b .ftsmooth
 
 %build
 
@@ -100,6 +97,7 @@ popd
            --with-zlib=yes \
            --with-bzip2=yes \
            --with-png=yes \
+           --enable-freetype-config \
            --with-harfbuzz=no
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' builds/unix/libtool
 sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' builds/unix/libtool
@@ -148,7 +146,7 @@ mv $RPM_BUILD_ROOT%{_includedir}/freetype2/freetype/config/ftconfig.h \
    $RPM_BUILD_ROOT%{_includedir}/freetype2/freetype/config/ftconfig-%{wordsize}.h
 install -p -m 644 %{SOURCE3} $RPM_BUILD_ROOT%{_includedir}/freetype2/freetype/config/ftconfig.h
 
-# Don't package static a or .la files
+# Don't package static .a or .la files
 rm -f $RPM_BUILD_ROOT%{_libdir}/*.{a,la}
 
 
@@ -204,6 +202,11 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.{a,la}
 %{_mandir}/man1/*
 
 %changelog
+* Fri May 25 2018 Marek Kasik <mkasik@redhat.com> - 2.9.1-1
+- Update to 2.9.1
+- Modify/remove patches as needed
+- Resolves: #1574125
+
 * Tue Mar 20 2018 Marek Kasik <mkasik@redhat.com> - 2.9-1
 - Update to 2.9
 - Add/modify/remove patches as needed
