@@ -29,6 +29,7 @@ Patch4:  freetype-2.8-multilib.patch
 
 Patch5:  freetype-2.9-ftsmooth.patch
 
+BuildRequires:  gcc
 BuildRequires: libX11-devel
 BuildRequires: libpng-devel
 BuildRequires: zlib-devel
