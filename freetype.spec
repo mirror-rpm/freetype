@@ -7,7 +7,7 @@
 Summary: A free and portable font rendering engine
 Name: freetype
 Version: 2.9.1
-Release: 2%{?dist}
+Release: 3%{?dist}
 License: (FTL or GPLv2+) and BSD and MIT and Public Domain and zlib with acknowledgement
 Group: System Environment/Libraries
 URL: http://www.freetype.org
@@ -203,6 +203,10 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.{a,la}
 %{_mandir}/man1/*
 
 %changelog
+* Fri Oct 19 2018 Marek Kasik <mkasik@redhat.com> - 2.9.1-3
+- Use 'pkgconf' directly for multilib reasons
+- Resolves: #1639379
+
 * Fri Jul 13 2018 Fedora Release Engineering <releng@fedoraproject.org> - 2.9.1-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_29_Mass_Rebuild
 
