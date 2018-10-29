@@ -1,13 +1,9 @@
-# Patented subpixel rendering disabled by default.
-# Pass '--with subpixel_rendering' on rpmbuild command-line to enable.
-%{!?_with_subpixel_rendering: %{!?_without_subpixel_rendering: %define _without_subpixel_rendering --without-subpixel_rendering}}
-
 %{!?with_xfree86:%define with_xfree86 1}
 
 Summary: A free and portable font rendering engine
 Name: freetype
 Version: 2.9.1
-Release: 3%{?dist}
+Release: 4%{?dist}
 License: (FTL or GPLv2+) and BSD and MIT and Public Domain and zlib with acknowledgement
 Group: System Environment/Libraries
 URL: http://www.freetype.org
@@ -15,8 +11,6 @@ Source:  http://download.savannah.gnu.org/releases/freetype/freetype-%{version}.
 Source1: http://download.savannah.gnu.org/releases/freetype/freetype-doc-%{version}.tar.bz2
 Source2: http://download.savannah.gnu.org/releases/freetype/ft2demos-%{version}.tar.bz2
 Source3: ftconfig.h
-
-Patch0:  freetype-2.3.0-enable-spr.patch
 
 # Enable otvalid and gxvalid modules
 Patch1:  freetype-2.2.1-enable-valid.patch
@@ -36,9 +30,6 @@ BuildRequires: zlib-devel
 BuildRequires: bzip2-devel
 
 Provides: %{name}-bytecode
-%if %{?_with_subpixel_rendering:1}%{!?_with_subpixel_rendering:0}
-Provides: %{name}-subpixel
-%endif
 
 %description
 The FreeType engine is a free and portable font rendering
@@ -77,10 +68,6 @@ FreeType.
 
 %prep
 %setup -q -b 1 -a 2
-
-%if %{?_with_subpixel_rendering:1}%{!?_with_subpixel_rendering:0}
-%patch0  -p1 -b .enable-spr
-%endif
 
 %patch1  -p1 -b .enable-valid
 
@@ -203,6 +190,9 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.{a,la}
 %{_mandir}/man1/*
 
 %changelog
+* Mon Oct 29 2018 Marek Kasik <mkasik@redhat.com> - 2.9.1-4
+- Enable ClearType code thanks to Microsoft joining OIN
+
 * Fri Oct 19 2018 Marek Kasik <mkasik@redhat.com> - 2.9.1-3
 - Use 'pkgconf' directly for multilib reasons
 - Resolves: #1639379
