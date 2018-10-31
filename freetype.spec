@@ -3,7 +3,7 @@
 Summary: A free and portable font rendering engine
 Name: freetype
 Version: 2.9.1
-Release: 5%{?dist}
+Release: 6%{?dist}
 License: (FTL or GPLv2+) and BSD and MIT and Public Domain and zlib with acknowledgement
 Group: System Environment/Libraries
 URL: http://www.freetype.org
@@ -33,6 +33,7 @@ BuildRequires: bzip2-devel
 
 Provides: %{name}-bytecode
 Provides: %{name}-subpixel
+Obsoletes: freetype-freeworld < 2.9.1-2
 
 %description
 The FreeType engine is a free and portable font rendering
@@ -194,6 +195,10 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.{a,la}
 %{_mandir}/man1/*
 
 %changelog
+* Wed Oct 31 2018 Marek Kasik <mkasik@redhat.com> - 2.9.1-6
+- Obsolete freetype-freeworld
+- Resolves: #1644700
+
 * Wed Oct 31 2018 Neal Gompa <ngompa13@gmail.com> - 2.9.1-5
 - Correctly enable subpixel rendering for ClearType functionality
 
