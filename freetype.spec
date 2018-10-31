@@ -3,7 +3,7 @@
 Summary: A free and portable font rendering engine
 Name: freetype
 Version: 2.9.1
-Release: 4%{?dist}
+Release: 5%{?dist}
 License: (FTL or GPLv2+) and BSD and MIT and Public Domain and zlib with acknowledgement
 Group: System Environment/Libraries
 URL: http://www.freetype.org
@@ -12,6 +12,8 @@ Source1: http://download.savannah.gnu.org/releases/freetype/freetype-doc-%{versi
 Source2: http://download.savannah.gnu.org/releases/freetype/ft2demos-%{version}.tar.bz2
 Source3: ftconfig.h
 
+# Enable subpixel rendering (ClearType)
+Patch0:  freetype-2.3.0-enable-spr.patch
 # Enable otvalid and gxvalid modules
 Patch1:  freetype-2.2.1-enable-valid.patch
 # Enable additional demos
@@ -30,6 +32,7 @@ BuildRequires: zlib-devel
 BuildRequires: bzip2-devel
 
 Provides: %{name}-bytecode
+Provides: %{name}-subpixel
 
 %description
 The FreeType engine is a free and portable font rendering
@@ -69,6 +72,7 @@ FreeType.
 %prep
 %setup -q -b 1 -a 2
 
+%patch0  -p1 -b .enable-spr
 %patch1  -p1 -b .enable-valid
 
 pushd ft2demos-%{version}
@@ -190,6 +194,9 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.{a,la}
 %{_mandir}/man1/*
 
 %changelog
+* Wed Oct 31 2018 Neal Gompa <ngompa13@gmail.com> - 2.9.1-5
+- Correctly enable subpixel rendering for ClearType functionality
+
 * Mon Oct 29 2018 Marek Kasik <mkasik@redhat.com> - 2.9.1-4
 - Enable ClearType code thanks to Microsoft joining OIN
 
