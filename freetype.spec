@@ -5,7 +5,6 @@ Name: freetype
 Version: 2.9.1
 Release: 6%{?dist}
 License: (FTL or GPLv2+) and BSD and MIT and Public Domain and zlib with acknowledgement
-Group: System Environment/Libraries
 URL: http://www.freetype.org
 Source:  http://download.savannah.gnu.org/releases/freetype/freetype-%{version}.tar.bz2
 Source1: http://download.savannah.gnu.org/releases/freetype/freetype-doc-%{version}.tar.bz2
@@ -46,7 +45,6 @@ text-rendering library.
 
 %package demos
 Summary: A collection of FreeType demos
-Group: System Environment/Libraries
 Requires: %{name} = %{version}-%{release}
 
 %description demos
@@ -58,7 +56,6 @@ small utilities showing various capabilities of the FreeType library.
 
 %package devel
 Summary: FreeType development libraries and header files
-Group: Development/Libraries
 Requires: %{name} = %{version}-%{release}
 Requires: pkgconf%{?_isa}
 
