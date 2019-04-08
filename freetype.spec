@@ -3,7 +3,7 @@
 Summary: A free and portable font rendering engine
 Name: freetype
 Version: 2.9.1
-Release: 7%{?dist}
+Release: 8%{?dist}
 License: (FTL or GPLv2+) and BSD and MIT and Public Domain and zlib with acknowledgement
 URL: http://www.freetype.org
 Source:  http://download.savannah.gnu.org/releases/freetype/freetype-%{version}.tar.bz2
@@ -21,8 +21,6 @@ Patch2:  freetype-2.5.2-more-demos.patch
 Patch3:  freetype-2.6.5-libtool.patch
 
 Patch4:  freetype-2.8-multilib.patch
-
-Patch5:  freetype-2.9-ftsmooth.patch
 
 BuildRequires:  gcc
 BuildRequires: libX11-devel
@@ -79,7 +77,6 @@ popd
 
 %patch3 -p1 -b .libtool
 %patch4 -p1 -b .multilib
-%patch5 -p1 -b .ftsmooth
 
 %build
 
@@ -192,6 +189,9 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.{a,la}
 %{_mandir}/man1/*
 
 %changelog
+* Mon Apr 8 2019 Marek Kasik <mkasik@redhat.com> - 2.9.1-8
+- Remove freetype-2.9-ftsmooth.patch
+
 * Thu Jan 31 2019 Fedora Release Engineering <releng@fedoraproject.org> - 2.9.1-7
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_30_Mass_Rebuild
 
