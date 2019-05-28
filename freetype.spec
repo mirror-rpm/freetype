@@ -2,8 +2,8 @@
 
 Summary: A free and portable font rendering engine
 Name: freetype
-Version: 2.9.1
-Release: 8%{?dist}
+Version: 2.10.0
+Release: 1%{?dist}
 License: (FTL or GPLv2+) and BSD and MIT and Public Domain and zlib with acknowledgement
 URL: http://www.freetype.org
 Source:  http://download.savannah.gnu.org/releases/freetype/freetype-%{version}.tar.bz2
@@ -21,6 +21,8 @@ Patch2:  freetype-2.5.2-more-demos.patch
 Patch3:  freetype-2.6.5-libtool.patch
 
 Patch4:  freetype-2.8-multilib.patch
+
+Patch5:  freetype-2.10.0-internal-outline.patch
 
 BuildRequires:  gcc
 BuildRequires: libX11-devel
@@ -77,6 +79,7 @@ popd
 
 %patch3 -p1 -b .libtool
 %patch4 -p1 -b .multilib
+%patch5 -p1 -b .internal-outline
 
 %build
 
@@ -189,6 +192,14 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.{a,la}
 %{_mandir}/man1/*
 
 %changelog
+* Tue May 28 2019 Marek Kasik <mkasik@redhat.com> - 2.10.0-1
+- Update to 2.10.0
+- Keep FT_Outline_New_Internal() and FT_Outline_Done_Internal()
+- for ABI compatibility but make them just throw
+- Unimplemented_Feature error.
+- Remove them once soname has been bumped!
+- Resolves: #1689117
+
 * Mon Apr 8 2019 Marek Kasik <mkasik@redhat.com> - 2.9.1-8
 - Remove freetype-2.9-ftsmooth.patch
 
