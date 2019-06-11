@@ -3,7 +3,7 @@
 Summary: A free and portable font rendering engine
 Name: freetype
 Version: 2.10.0
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: (FTL or GPLv2+) and BSD and MIT and Public Domain and zlib with acknowledgement
 URL: http://www.freetype.org
 Source:  http://download.savannah.gnu.org/releases/freetype/freetype-%{version}.tar.bz2
@@ -23,6 +23,10 @@ Patch3:  freetype-2.6.5-libtool.patch
 Patch4:  freetype-2.8-multilib.patch
 
 Patch5:  freetype-2.10.0-internal-outline.patch
+
+# https://bugzilla.redhat.com/show_bug.cgi?id=1719132
+# https://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=c149f7397e484c97f45fb75fa1c7fdda2fc646cd
+Patch6:  0001-pcf-Fix-handling-of-undefined-glyph-56067.patch
 
 BuildRequires:  gcc
 BuildRequires: libX11-devel
@@ -80,6 +84,8 @@ popd
 %patch3 -p1 -b .libtool
 %patch4 -p1 -b .multilib
 %patch5 -p1 -b .internal-outline
+
+%patch6 -p1 -b .undefined-pcf-glyph
 
 %build
 
@@ -192,6 +198,9 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.{a,la}
 %{_mandir}/man1/*
 
 %changelog
+* Tue Jun 11 09:42:57 CEST 2019 Igor Gnatenko <ignatenkobrain@fedoraproject.org> - 2.10.0-2
+- Fix handling of undefined glyph [pcf]
+
 * Tue May 28 2019 Marek Kasik <mkasik@redhat.com> - 2.10.0-1
 - Update to 2.10.0
 - Keep FT_Outline_New_Internal() and FT_Outline_Done_Internal()
