@@ -23,6 +23,8 @@ Patch3:  freetype-2.6.5-libtool.patch
 Patch4:  freetype-2.8-multilib.patch
 
 Patch5:  freetype-2.10.0-internal-outline.patch
+# Revert ABI/API change
+Patch6:  freetype-2.10.1-debughook.patch
 
 BuildRequires:  gcc
 BuildRequires: libX11-devel
@@ -80,6 +82,7 @@ popd
 %patch3 -p1 -b .libtool
 %patch4 -p1 -b .multilib
 %patch5 -p1 -b .internal-outline
+%patch6 -p1 -b .debughook
 
 %build
 
@@ -194,6 +197,7 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.{a,la}
 %changelog
 * Sat Oct 12 2019 Michael Kuhn <suraia@fedoraproject.org> - 2.10.1-1
 - Update to 2.10.1
+- Revert FT_DebugHook_Func ABI/API changes
 
 * Thu Jul 25 2019 Fedora Release Engineering <releng@fedoraproject.org> - 2.10.0-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_31_Mass_Rebuild
