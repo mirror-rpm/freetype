@@ -2,8 +2,8 @@
 
 Summary: A free and portable font rendering engine
 Name: freetype
-Version: 2.10.2
-Release: 3%{?dist}
+Version: 2.10.4
+Release: 1%{?dist}
 License: (FTL or GPLv2+) and BSD and MIT and Public Domain and zlib with acknowledgement
 URL: http://www.freetype.org
 Source:  http://download.savannah.gnu.org/releases/freetype/freetype-%{version}.tar.xz
@@ -25,6 +25,8 @@ Patch4:  freetype-2.8-multilib.patch
 Patch5:  freetype-2.10.0-internal-outline.patch
 # Revert ABI/API change
 Patch6:  freetype-2.10.1-debughook.patch
+
+Patch7:  freetype-2.10.4-png-memory-leak.patch
 
 BuildRequires:  gcc
 BuildRequires: libX11-devel
@@ -84,6 +86,7 @@ popd
 %patch4 -p1 -b .multilib
 %patch5 -p1 -b .internal-outline
 %patch6 -p1 -b .debughook
+%patch7 -p1 -b .png-memory-leak
 
 %build
 
@@ -122,7 +125,7 @@ popd
 %make_install gnulocaledir=$RPM_BUILD_ROOT%{_datadir}/locale
 
 {
-  for ftdemo in ftbench ftchkwd ftmemchk ftpatchk fttimer ftdump ftlint ftmemchk ftvalid ; do
+  for ftdemo in ftbench ftchkwd ftmemchk ftpatchk fttimer ftdump ftlint ftvalid ; do
       builds/unix/libtool --mode=install install -m 755 ft2demos-%{version}/bin/$ftdemo $RPM_BUILD_ROOT/%{_bindir}
   done
 }
@@ -130,6 +133,20 @@ popd
 {
   for ftdemo in ftdiff ftgamma ftgrid ftmulti ftstring fttimer ftview ; do
       builds/unix/libtool --mode=install install -m 755 ft2demos-%{version}/bin/$ftdemo $RPM_BUILD_ROOT/%{_bindir}
+  done
+}
+%endif
+
+# man pages for freetype-demos
+{
+  for ftdemo in ftbench ftdump ftlint ftvalid ; do
+      builds/unix/libtool --mode=install install -m 644 ft2demos-%{version}/man/${ftdemo}.1 $RPM_BUILD_ROOT/%{_mandir}/man1
+  done
+}
+%if %{with_xfree86}
+{
+  for ftdemo in ftdiff ftgamma ftgrid ftmulti ftstring ftview ; do
+      builds/unix/libtool --mode=install install -m 644 ft2demos-%{version}/man/${ftdemo}.1 $RPM_BUILD_ROOT/%{_mandir}/man1
   done
 }
 %endif
@@ -172,6 +189,10 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.{a,la}
 %{_bindir}/ftdump
 %{_bindir}/ftlint
 %{_bindir}/ftvalid
+%{_mandir}/man1/ftbench.1.gz
+%{_mandir}/man1/ftdump.1.gz
+%{_mandir}/man1/ftlint.1.gz
+%{_mandir}/man1/ftvalid.1.gz
 %if %{with_xfree86}
 %{_bindir}/ftdiff
 %{_bindir}/ftgamma
@@ -179,6 +200,12 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.{a,la}
 %{_bindir}/ftmulti
 %{_bindir}/ftstring
 %{_bindir}/ftview
+%{_mandir}/man1/ftdiff.1.gz
+%{_mandir}/man1/ftgamma.1.gz
+%{_mandir}/man1/ftgrid.1.gz
+%{_mandir}/man1/ftmulti.1.gz
+%{_mandir}/man1/ftstring.1.gz
+%{_mandir}/man1/ftview.1.gz
 %endif
 %doc ChangeLog README
 
@@ -197,6 +224,13 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.{a,la}
 %{_mandir}/man1/*
 
 %changelog
+* Fri Oct 23 2020 Marek Kasik <maksik@redhat.com> - 2.10.4-1
+- Update to 2.10.4
+- Test bitmap size earlier for PNGs
+- Fix memory leak in pngshim.c
+- Enable man pages for demos
+- Resolves: #1887084, #1890211
+
 * Mon Jul 27 2020 Fedora Release Engineering <releng@fedoraproject.org> - 2.10.2-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
 
