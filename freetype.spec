@@ -34,6 +34,7 @@ BuildRequires: libpng-devel
 BuildRequires: zlib-devel
 BuildRequires: bzip2-devel
 BuildRequires: brotli-devel
+BuildRequires: make
 
 Provides: %{name}-bytecode
 Provides: %{name}-subpixel
