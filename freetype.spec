@@ -3,7 +3,7 @@
 Summary: A free and portable font rendering engine
 Name: freetype
 Version: 2.10.4
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: (FTL or GPLv2+) and BSD and MIT and Public Domain and zlib with acknowledgement
 URL: http://www.freetype.org
 Source:  http://download.savannah.gnu.org/releases/freetype/freetype-%{version}.tar.xz
@@ -225,6 +225,9 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.{a,la}
 %{_mandir}/man1/*
 
 %changelog
+* Tue Jan 26 2021 Fedora Release Engineering <releng@fedoraproject.org> - 2.10.4-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_34_Mass_Rebuild
+
 * Fri Oct 23 2020 Marek Kasik <maksik@redhat.com> - 2.10.4-1
 - Update to 2.10.4
 - Test bitmap size earlier for PNGs
