@@ -1,5 +1,5 @@
 %{!?with_xfree86:%define with_xfree86 1}
-%bcond_without bootstrap
+%bcond_with bootstrap
 
 Summary: A free and portable font rendering engine
 Name: freetype
