@@ -1,9 +1,10 @@
 %{!?with_xfree86:%define with_xfree86 1}
+%bcond_without bootstrap
 
 Summary: A free and portable font rendering engine
 Name: freetype
 Version: 2.10.4
-Release: 2%{?dist}
+Release: 3%{?dist}
 License: (FTL or GPLv2+) and BSD and MIT and Public Domain and zlib with acknowledgement
 URL: http://www.freetype.org
 Source:  http://download.savannah.gnu.org/releases/freetype/freetype-%{version}.tar.xz
@@ -35,6 +36,9 @@ BuildRequires: zlib-devel
 BuildRequires: bzip2-devel
 BuildRequires: brotli-devel
 BuildRequires: make
+%if %{without bootstrap}
+BuildRequires: harfbuzz-devel
+%endif
 
 Provides: %{name}-bytecode
 Provides: %{name}-subpixel
@@ -96,7 +100,11 @@ popd
            --with-bzip2=yes \
            --with-png=yes \
            --enable-freetype-config \
+%if %{without bootstrap}
+           --with-harfbuzz=yes \
+%else
            --with-harfbuzz=no \
+%endif
            --with-brotli=yes
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' builds/unix/libtool
 sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' builds/unix/libtool
@@ -225,10 +233,16 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.{a,la}
 %{_mandir}/man1/*
 
 %changelog
+* Fri Feb 5 2021 Akira TAGOH <tagoh@redhat.com> - 2.10.4-3
+- Enable HarfBuzz support
+- Add bootstrap without HarfBuzz
+- Resolves: #1853937
+- Resolves: #1906714
+
 * Tue Jan 26 2021 Fedora Release Engineering <releng@fedoraproject.org> - 2.10.4-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_34_Mass_Rebuild
 
-* Fri Oct 23 2020 Marek Kasik <maksik@redhat.com> - 2.10.4-1
+* Fri Oct 23 2020 Marek Kasik <mkasik@redhat.com> - 2.10.4-1
 - Update to 2.10.4
 - Test bitmap size earlier for PNGs
 - Fix memory leak in pngshim.c
