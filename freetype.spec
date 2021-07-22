@@ -3,8 +3,8 @@
 
 Summary: A free and portable font rendering engine
 Name: freetype
-Version: 2.10.4
-Release: 4%{?dist}
+Version: 2.11.0
+Release: 1%{?dist}
 License: (FTL or GPLv2+) and BSD and MIT and Public Domain and zlib with acknowledgement
 URL: http://www.freetype.org
 Source:  http://download.savannah.gnu.org/releases/freetype/freetype-%{version}.tar.xz
@@ -26,8 +26,6 @@ Patch4:  freetype-2.8-multilib.patch
 Patch5:  freetype-2.10.0-internal-outline.patch
 # Revert ABI/API change
 Patch6:  freetype-2.10.1-debughook.patch
-
-Patch7:  freetype-2.10.4-png-memory-leak.patch
 
 BuildRequires:  gcc
 BuildRequires: libX11-devel
@@ -91,7 +89,6 @@ popd
 %patch4 -p1 -b .multilib
 %patch5 -p1 -b .internal-outline
 %patch6 -p1 -b .debughook
-%patch7 -p1 -b .png-memory-leak
 
 %build
 
@@ -185,7 +182,7 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.{a,la}
 
 %files
 %{!?_licensedir:%global license %%doc}
-%license docs/LICENSE.TXT docs/FTL.TXT docs/GPLv2.TXT
+%license LICENSE.TXT docs/FTL.TXT docs/GPLv2.TXT
 %{_libdir}/libfreetype.so.*
 %doc README
 
@@ -233,6 +230,9 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.{a,la}
 %{_mandir}/man1/*
 
 %changelog
+* Thu Jul 22 2021 Marek Kasik <mkasik@redhat.com> - 2.11.0-1
+- Update to 2.11.0
+
 * Wed Jul 21 2021 Fedora Release Engineering <releng@fedoraproject.org> - 2.10.4-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_35_Mass_Rebuild
 
