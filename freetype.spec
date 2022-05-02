@@ -3,7 +3,7 @@
 
 Summary: A free and portable font rendering engine
 Name: freetype
-Version: 2.12.0
+Version: 2.12.1
 Release: 1%{?dist}
 License: (FTL or GPLv2+) and BSD and MIT and Public Domain and zlib with acknowledgement
 URL: http://www.freetype.org
@@ -230,6 +230,10 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.{a,la}
 %{_mandir}/man1/*
 
 %changelog
+* Mon May  2 2022 Marek Kasik <mkasik@redhat.com> - 2.12.1-1
+- Update to 2.12.1
+- Resolves: #2080714
+
 * Mon Apr 25 2022 Marek Kasik <mkasik@redhat.com> - 2.12.0-1
 - Update to 2.12.0
 - Resolves: #2070686
